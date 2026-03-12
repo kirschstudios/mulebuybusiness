@@ -15,141 +15,146 @@ const db = getFirestore(app);
 
 const friends = ["Lukas", "Alex", "Adelin", "Cristi"];
 
+// Efectul de bani cade pe AMBELE pagini
 function createMoneyRain() {
     const bg = document.getElementById('money-bg');
+    if(!bg) return; // Siguranță
     const moneySymbols = ['💵', '💶', '💰', '💸'];
     for (let i = 0; i < 25; i++) {
         let money = document.createElement('div');
         money.classList.add('money-icon');
         money.innerText = moneySymbols[Math.floor(Math.random() * moneySymbols.length)];
         money.style.left = `${Math.random() * 100}vw`;
-        money.style.animationDuration = `${Math.random() * 7 + 8}s`; /* Cădere mai lentă, elegantă */
+        money.style.animationDuration = `${Math.random() * 7 + 8}s`; 
         money.style.animationDelay = `${Math.random() * 5}s`;
         bg.appendChild(money);
     }
 }
 createMoneyRain();
 
-function renderTablesSetup() {
-    const container = document.getElementById('tables-container');
-    container.innerHTML = '';
+// --- LOGICA PENTRU PAGINA DE COMENZI (RULA DOAR DACA SUNTEM PE INDEX) ---
+if (document.getElementById('tables-container')) {
 
-    friends.forEach(friend => {
-        // Am adăugat clasa 'glass-card' pe div-ul principal
-        container.innerHTML += `
-            <div class="person-section glass-card" id="section-${friend}">
-                <div class="person-header">
-                    <h2>${friend}</h2>
-                    <div class="person-stats">
-                        <div class="total-price"><span id="total-${friend}">0.00</span> RON</div>
-                        <div class="total-weight">Greutate: <span id="weight-${friend}">0</span> g</div>
+    function renderTablesSetup() {
+        const container = document.getElementById('tables-container');
+        container.innerHTML = '';
+
+        friends.forEach(friend => {
+            container.innerHTML += `
+                <div class="person-section glass-card" id="section-${friend}">
+                    <div class="person-header">
+                        <h2>${friend}</h2>
+                        <div class="person-stats">
+                            <div class="total-price"><span id="total-${friend}">0.00</span> RON</div>
+                            <div class="total-weight">Greutate: <span id="weight-${friend}">0</span> g</div>
+                        </div>
                     </div>
+
+                    <button class="btn-submit-small" onclick="openModal('${friend}')">+ Adaugă produs</button>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Produs</th>
+                                <th>Model</th>
+                                <th>Mărime</th>
+                                <th>Preț</th>
+                                <th>Greutate</th>
+                                <th>Link</th>
+                                <th>Acțiune</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-${friend}">
+                        </tbody>
+                    </table>
                 </div>
-
-                <button class="btn-submit-small" onclick="openModal('${friend}')">+ Adaugă produs</button>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Produs</th>
-                            <th>Model</th>
-                            <th>Mărime</th>
-                            <th>Preț</th>
-                            <th>Greutate</th>
-                            <th>Link</th>
-                            <th>Acțiune</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbody-${friend}">
-                    </tbody>
-                </table>
-            </div>
-        `;
-    });
-}
-renderTablesSetup();
-
-window.openModal = function(person) {
-    document.getElementById('modal-title').innerText = `Adaugă la ${person}`;
-    document.getElementById('modal-person').value = person;
-    document.getElementById('add-modal').classList.add('active');
-}
-
-window.closeModal = function() {
-    document.getElementById('add-modal').classList.remove('active');
-    document.getElementById('modal-form').reset();
-}
-
-window.submitModalForm = async function(event) {
-    event.preventDefault();
-
-    const newItem = {
-        person: document.getElementById('modal-person').value,
-        name: document.getElementById('modal-name').value,
-        model: document.getElementById('modal-model').value,
-        size: document.getElementById('modal-size').value,
-        price: parseFloat(document.getElementById('modal-price').value),
-        weight: parseInt(document.getElementById('modal-weight').value),
-        link: document.getElementById('modal-link').value
-    };
-
-    try {
-        await addDoc(collection(db, "orders"), newItem);
-        closeModal();
-    } catch (error) {
-        console.error("Eroare la adăugare: ", error);
-        alert("Eroare la adăugare. Verifică consola.");
-    }
-}
-
-window.deleteItem = async function(id) {
-    if(confirm("Ești sigur că vrei să ștergi acest produs?")) {
-        await deleteDoc(doc(db, "orders", id));
-    }
-}
-
-onSnapshot(collection(db, "orders"), (snapshot) => {
-    let totals = { Lukas: 0, Alex: 0, Adelin: 0, Cristi: 0 };
-    let weights = { Lukas: 0, Alex: 0, Adelin: 0, Cristi: 0 };
-    let tableContents = { Lukas: "", Alex: "", Adelin: "", Cristi: "" };
-    
-    let grandTotalPrice = 0;
-    let grandTotalWeight = 0;
-
-    snapshot.forEach((doc) => {
-        const item = doc.data();
-        const id = doc.id;
-        
-        if(friends.includes(item.person)) {
-            let itemWeight = item.weight || 0;
-            
-            totals[item.person] += item.price;
-            weights[item.person] += itemWeight;
-            
-            grandTotalPrice += item.price;
-            grandTotalWeight += itemWeight;
-
-            tableContents[item.person] += `
-                <tr>
-                    <td>${item.name}</td>
-                    <td>${item.model}</td>
-                    <td>${item.size}</td>
-                    <td>${item.price.toFixed(2)} RON</td>
-                    <td>${itemWeight} g</td>
-                    <td><a href="${item.link}" target="_blank" class="btn-link">Cumpără</a></td>
-                    <td><button onclick="deleteItem('${id}')" class="btn-delete">Șterge</button></td>
-                </tr>
             `;
+        });
+    }
+    renderTablesSetup();
+
+    window.openModal = function(person) {
+        document.getElementById('modal-title').innerText = `Adaugă la ${person}`;
+        document.getElementById('modal-person').value = person;
+        document.getElementById('add-modal').classList.add('active');
+    }
+
+    window.closeModal = function() {
+        document.getElementById('add-modal').classList.remove('active');
+        document.getElementById('modal-form').reset();
+    }
+
+    window.submitModalForm = async function(event) {
+        event.preventDefault();
+
+        const newItem = {
+            person: document.getElementById('modal-person').value,
+            name: document.getElementById('modal-name').value,
+            model: document.getElementById('modal-model').value,
+            size: document.getElementById('modal-size').value,
+            price: parseFloat(document.getElementById('modal-price').value),
+            weight: parseInt(document.getElementById('modal-weight').value),
+            link: document.getElementById('modal-link').value
+        };
+
+        try {
+            await addDoc(collection(db, "orders"), newItem);
+            closeModal();
+        } catch (error) {
+            console.error("Eroare la adăugare: ", error);
+            alert("Eroare la adăugare. Verifică consola.");
         }
-    });
+    }
 
-    friends.forEach(friend => {
-        document.getElementById(`tbody-${friend}`).innerHTML = tableContents[friend];
-        document.getElementById(`total-${friend}`).innerText = totals[friend].toFixed(2);
-        document.getElementById(`weight-${friend}`).innerText = weights[friend];
-    });
+    window.deleteItem = async function(id) {
+        if(confirm("Ești sigur că vrei să ștergi acest produs?")) {
+            await deleteDoc(doc(db, "orders", id));
+        }
+    }
 
-    document.getElementById('grand-total-price').innerText = grandTotalPrice.toFixed(2) + " RON";
-    document.getElementById('grand-total-weight').innerText = grandTotalWeight + " g";
-    document.getElementById('kg-estimate').innerText = `(${(grandTotalWeight / 1000).toFixed(2)} kg)`;
-});
+    onSnapshot(collection(db, "orders"), (snapshot) => {
+        let totals = { Lukas: 0, Alex: 0, Adelin: 0, Cristi: 0 };
+        let weights = { Lukas: 0, Alex: 0, Adelin: 0, Cristi: 0 };
+        let tableContents = { Lukas: "", Alex: "", Adelin: "", Cristi: "" };
+        
+        let grandTotalPrice = 0;
+        let grandTotalWeight = 0;
+
+        snapshot.forEach((doc) => {
+            const item = doc.data();
+            const id = doc.id;
+            
+            if(friends.includes(item.person)) {
+                let itemWeight = item.weight || 0;
+                
+                totals[item.person] += item.price;
+                weights[item.person] += itemWeight;
+                
+                grandTotalPrice += item.price;
+                grandTotalWeight += itemWeight;
+
+                tableContents[item.person] += `
+                    <tr>
+                        <td>${item.name}</td>
+                        <td>${item.model}</td>
+                        <td>${item.size}</td>
+                        <td>${item.price.toFixed(2)} RON</td>
+                        <td>${itemWeight} g</td>
+                        <td><a href="${item.link}" target="_blank" class="btn-link">Cumpără</a></td>
+                        <td><button onclick="deleteItem('${id}')" class="btn-delete">Șterge</button></td>
+                    </tr>
+                `;
+            }
+        });
+
+        friends.forEach(friend => {
+            document.getElementById(`tbody-${friend}`).innerHTML = tableContents[friend];
+            document.getElementById(`total-${friend}`).innerText = totals[friend].toFixed(2);
+            document.getElementById(`weight-${friend}`).innerText = weights[friend];
+        });
+
+        document.getElementById('grand-total-price').innerText = grandTotalPrice.toFixed(2) + " RON";
+        document.getElementById('grand-total-weight').innerText = grandTotalWeight + " g";
+        document.getElementById('kg-estimate').innerText = `(${(grandTotalWeight / 1000).toFixed(2)} kg)`;
+    });
+}

@@ -8,9 +8,13 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <nav class="glass-navbar">
+        <a href="index.html" class="nav-link active">📋 Comenzile Noastre</a>
+        <a href="resurse.html" class="nav-link">🔍 Găsește Haine (QC)</a>
+    </nav>
+
     <div class="ambient-orb orb-1"></div>
     <div class="ambient-orb orb-2"></div>
-    
     <div class="money-background" id="money-bg"></div>
 
     <div class="container">
@@ -45,14 +49,12 @@
             </div>
             <form id="modal-form" onsubmit="submitModalForm(event)">
                 <input type="hidden" id="modal-person">
-                
                 <input type="text" id="modal-name" placeholder="Nume produs" required>
                 <input type="text" id="modal-model" placeholder="Model" required>
                 <input type="text" id="modal-size" placeholder="Mărime" required>
                 <input type="number" id="modal-price" placeholder="Preț (RON)" step="0.01" required>
                 <input type="number" id="modal-weight" placeholder="Grame (g)" required>
                 <input type="url" id="modal-link" placeholder="Link (https://...)" required>
-                
                 <button type="submit" class="btn-submit">Adaugă Produsul</button>
             </form>
         </div>

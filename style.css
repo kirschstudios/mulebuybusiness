@@ -170,3 +170,45 @@ td { color: #e2e8f0; }
     .person-stats { text-align: left; }
     .person-section { overflow-x: auto; padding: 20px; }
 }
+
+/* --- NAVBAR --- */
+.glass-navbar {
+    display: flex; justify-content: center; gap: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 15px 20px; position: sticky; top: 0; z-index: 200;
+}
+.nav-link {
+    color: var(--text-muted); text-decoration: none; font-weight: 600;
+    padding: 10px 20px; border-radius: 12px; transition: all 0.3s ease;
+    border: 1px solid transparent; font-size: 0.95em;
+}
+.nav-link:hover { color: white; background: rgba(255, 255, 255, 0.05); }
+.nav-link.active {
+    color: white; background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+}
+
+/* --- GRID RESURSE (PAGINA NOUA) --- */
+.resources-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px; margin-top: 20px;
+}
+.resource-card {
+    display: flex; flex-direction: column; padding: 25px; gap: 20px;
+    transition: transform 0.3s ease;
+}
+.resource-card:hover { transform: translateY(-8px); }
+.resource-img-container {
+    width: 100%; height: 220px; border-radius: 16px; overflow: hidden;
+    display: flex; justify-content: center; align-items: center;
+    background: rgba(0,0,0,0.5); /* Culoare de fundal până pui poza */
+}
+.resource-img-container img {
+    width: 100%; height: 100%; object-fit: cover; transition: 0.5s ease;
+}
+.resource-card:hover .resource-img-container img { transform: scale(1.05); }
+.resource-card h3 { margin: 0; font-size: 1.6em; color: white; font-weight: 800; }
+.resource-card p { color: var(--text-muted); line-height: 1.6; flex-grow: 1; margin: 0; }
