@@ -1,7 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-// !!! PUNE AICI DATELE TALE FIREBASE !!!
 const firebaseConfig = {
   apiKey: "AIzaSyDC9WX355FRT66_Yc2wjbz6VdyEyhh_ctE",
   authDomain: "mulebuy-business.firebaseapp.com",
@@ -31,7 +30,7 @@ function createMoneyRain() {
 }
 createMoneyRain();
 
-// Funcția care randează totul: Nume, Rând de adăugare și Tabelul
+// Generăm structura tabelelor
 function renderTablesSetup() {
     const container = document.getElementById('tables-container');
     container.innerHTML = '';
@@ -47,15 +46,7 @@ function renderTablesSetup() {
                     </div>
                 </div>
 
-                <form class="person-add-form" id="form-${friend}" onsubmit="addItem(event, '${friend}')">
-                    <input type="text" id="name-${friend}" placeholder="Nume produs" required>
-                    <input type="text" id="model-${friend}" placeholder="Model" required>
-                    <input type="text" id="size-${friend}" placeholder="Mărime" required>
-                    <input type="number" id="price-${friend}" placeholder="Preț" step="0.01" required>
-                    <input type="number" id="weight-${friend}" placeholder="Grame" required>
-                    <input type="url" id="link-${friend}" placeholder="Link" required>
-                    <button type="submit" class="btn-submit-small">+ Adaugă la ${friend}</button>
-                </form>
+                <button class="btn-submit-small" onclick="openModal('${friend}')">+ Adaugă produs</button>
 
                 <table>
                     <thead>
@@ -78,29 +69,46 @@ function renderTablesSetup() {
 }
 renderTablesSetup();
 
-// Funcție globală pentru a putea fi apelată din formularele generate dinamic
-window.addItem = async function(event, person) {
-    event.preventDefault(); // Oprește reîncărcarea paginii
+// --- LOGICA PENTRU POP-UP (MODAL) ---
 
-    // Luăm valorile din inputurile care au ID-ul legat de numele persoanei
+window.openModal = function(person) {
+    // Setăm numele persoanei în titlu și în input-ul ascuns
+    document.getElementById('modal-title').innerText = `Adaugă la ${person}`;
+    document.getElementById('modal-person').value = person;
+    // Afișăm panoul
+    document.getElementById('add-modal').classList.add('active');
+}
+
+window.closeModal = function() {
+    // Ascundem panoul și golim formularul
+    document.getElementById('add-modal').classList.remove('active');
+    document.getElementById('modal-form').reset();
+}
+
+window.submitModalForm = async function(event) {
+    event.preventDefault(); // Oprește refresh-ul
+
+    // Luăm datele din pop-up
     const newItem = {
-        person: person,
-        name: document.getElementById(`name-${person}`).value,
-        model: document.getElementById(`model-${person}`).value,
-        size: document.getElementById(`size-${person}`).value,
-        price: parseFloat(document.getElementById(`price-${person}`).value),
-        weight: parseInt(document.getElementById(`weight-${person}`).value),
-        link: document.getElementById(`link-${person}`).value
+        person: document.getElementById('modal-person').value,
+        name: document.getElementById('modal-name').value,
+        model: document.getElementById('modal-model').value,
+        size: document.getElementById('modal-size').value,
+        price: parseFloat(document.getElementById('modal-price').value),
+        weight: parseInt(document.getElementById('modal-weight').value),
+        link: document.getElementById('modal-link').value
     };
 
     try {
         await addDoc(collection(db, "orders"), newItem);
-        document.getElementById(`form-${person}`).reset(); // Golește doar inputurile persoanei curente
+        closeModal(); // Închide panoul automat după ce a adăugat produsul
     } catch (error) {
         console.error("Eroare la adăugare: ", error);
         alert("Eroare la adăugare. Verifică consola.");
     }
-};
+}
+
+// ------------------------------------
 
 window.deleteItem = async function(id) {
     if(confirm("Ești sigur că vrei să ștergi acest produs?")) {

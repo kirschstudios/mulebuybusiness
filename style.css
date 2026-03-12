@@ -15,205 +15,127 @@ body {
 }
 
 .container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 20px;
-    position: relative;
-    z-index: 10;
+    max-width: 1400px; margin: 0 auto; padding: 20px;
+    position: relative; z-index: 10;
 }
 
 header {
-    text-align: center;
-    margin-bottom: 40px;
-    border-bottom: 2px solid var(--accent);
-    padding-bottom: 20px;
+    text-align: center; margin-bottom: 40px;
+    border-bottom: 2px solid var(--accent); padding-bottom: 20px;
 }
 
 header h1 {
-    font-size: 2.5em;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 2px;
+    font-size: 2.5em; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 2px;
 }
 
-.main-layout {
-    display: flex;
-    gap: 30px;
-    align-items: flex-start;
-}
-
-.content-area {
-    flex: 1;
-}
+.main-layout { display: flex; gap: 30px; align-items: flex-start; }
+.content-area { flex: 1; }
 
 /* Panou Total Global */
 .grand-total-panel {
-    width: 280px;
-    background-color: var(--card-bg);
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    border: 2px solid var(--accent);
-    position: sticky;
-    top: 20px;
+    width: 280px; background-color: var(--card-bg); padding: 20px;
+    border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    border: 2px solid var(--accent); position: sticky; top: 20px;
 }
-
 .grand-total-panel h2 {
-    margin-top: 0;
-    color: var(--accent);
-    text-align: center;
-    border-bottom: 1px solid #334155;
-    padding-bottom: 10px;
+    margin-top: 0; color: var(--accent); text-align: center;
+    border-bottom: 1px solid #334155; padding-bottom: 10px;
 }
-
 .summary-box {
-    background-color: #0f172a;
-    padding: 15px;
-    border-radius: 8px;
-    margin-top: 15px;
-    text-align: center;
+    background-color: #0f172a; padding: 15px; border-radius: 8px;
+    margin-top: 15px; text-align: center;
 }
+.summary-box p { margin: 0 0 5px 0; color: #cbd5e1; font-size: 0.9em; text-transform: uppercase; }
+.summary-box h3 { margin: 0; color: var(--accent); font-size: 1.5em; }
+#kg-estimate { color: #94a3b8; }
 
-.summary-box p {
-    margin: 0 0 5px 0;
-    color: #cbd5e1;
-    font-size: 0.9em;
-    text-transform: uppercase;
-}
-
-.summary-box h3 {
-    margin: 0;
-    color: var(--accent);
-    font-size: 1.5em;
-}
-
-#kg-estimate {
-    color: #94a3b8;
-}
-
-/* Secțiuni Tabele (Fiecare Persoană) */
+/* Secțiuni Tabele */
 .person-section {
-    background-color: var(--card-bg);
-    margin-bottom: 40px;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    background-color: var(--card-bg); margin-bottom: 40px;
+    padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
-
 .person-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #334155;
-    padding-bottom: 10px;
-    margin-bottom: 15px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 15px;
 }
-
-.person-header h2 {
-    margin: 0;
-    color: #cbd5e1;
-    font-size: 1.8em;
-}
-
-.person-stats {
-    text-align: right;
-}
-
-.total-price {
-    font-size: 1.2em;
-    font-weight: bold;
-    color: var(--accent);
-}
-
-.total-weight {
-    font-size: 0.9em;
-    color: #94a3b8;
-}
-
-/* Formular Adăugare Specific (Nou) */
-.person-add-form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 15px;
-    background-color: #0f172a;
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px dashed #334155;
-}
-
-.person-add-form input {
-    flex: 1 1 100px;
-    padding: 10px;
-    border: 1px solid #334155;
-    background-color: #1e293b;
-    color: white;
-    border-radius: 6px;
-    outline: none;
-    font-size: 0.9em;
-}
-
-.person-add-form input:focus { border-color: var(--accent); }
+.person-header h2 { margin: 0; color: #cbd5e1; font-size: 1.8em; }
+.person-stats { text-align: right; }
+.total-price { font-size: 1.2em; font-weight: bold; color: var(--accent); }
+.total-weight { font-size: 0.9em; color: #94a3b8; }
 
 .btn-submit-small {
-    background-color: var(--accent);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-weight: bold;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.3s;
-    white-space: nowrap;
+    background-color: var(--accent); color: white; border: none;
+    padding: 10px 20px; font-weight: bold; border-radius: 6px; cursor: pointer;
+    transition: 0.3s; margin-bottom: 15px; font-size: 1em;
 }
-
 .btn-submit-small:hover { background-color: var(--accent-hover); }
 
 /* Tabel */
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #334155;
-}
-
-th {
-    color: var(--accent);
-    text-transform: uppercase;
-    font-size: 0.9em;
-}
-
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 12px; text-align: left; border-bottom: 1px solid #334155; }
+th { color: var(--accent); text-transform: uppercase; font-size: 0.9em; }
 .btn-link {
-    background-color: #3b82f6;
-    color: white;
-    padding: 6px 12px;
-    text-decoration: none;
-    border-radius: 4px;
-    font-size: 0.9em;
+    background-color: #3b82f6; color: white; padding: 6px 12px;
+    text-decoration: none; border-radius: 4px; font-size: 0.9em;
 }
-
 .btn-delete {
-    background-color: #ef4444;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
+    background-color: #ef4444; color: white; border: none;
+    padding: 6px 12px; border-radius: 4px; cursor: pointer;
 }
 
-/* Background Bani */
+/* --- FIX BANI PLUTITORI --- */
 .money-background {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     pointer-events: none; z-index: 1; overflow: hidden;
 }
 .money-icon {
-    position: absolute; font-size: 2em; animation: fall linear infinite; opacity: 0.2;
+    position: absolute; font-size: 2em; 
+    top: -10vh; /* Încep în afara ecranului sus */
+    animation: fall linear infinite; opacity: 0.2;
 }
-@keyframes fall { 0% { transform: translateY(-10vh) rotate(0deg); } 100% { transform: translateY(110vh) rotate(360deg); } }
+@keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(120vh) rotate(360deg); }
+}
+
+/* --- STILURI PENTRU POP-UP (MODAL) --- */
+.modal-overlay {
+    display: none; /* Ascuns implicit */
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.8); z-index: 100;
+    justify-content: center; align-items: center;
+    backdrop-filter: blur(4px);
+}
+.modal-overlay.active { display: flex; } /* Clasa asta e adăugată din JS când apeși butonul */
+
+.modal-content {
+    background-color: var(--card-bg); padding: 25px; border-radius: 12px;
+    width: 90%; max-width: 450px; border: 1px solid var(--accent);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+}
+.modal-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 20px; border-bottom: 1px solid #334155; padding-bottom: 10px;
+}
+.modal-header h2 { margin: 0; color: var(--accent); }
+.close-btn {
+    background: none; border: none; color: #cbd5e1; font-size: 2em;
+    cursor: pointer; line-height: 1; padding: 0;
+}
+.close-btn:hover { color: #ef4444; }
+
+#modal-form { display: flex; flex-direction: column; gap: 15px; }
+#modal-form input {
+    padding: 12px; border: 1px solid #334155; background-color: #0f172a;
+    color: white; border-radius: 6px; outline: none; width: 100%; box-sizing: border-box;
+}
+#modal-form input:focus { border-color: var(--accent); }
+.btn-submit {
+    background-color: var(--accent); color: white; border: none; padding: 15px;
+    font-size: 1.1em; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.3s;
+}
+.btn-submit:hover { background-color: var(--accent-hover); }
 
 /* Telefoane */
 @media (max-width: 900px) {

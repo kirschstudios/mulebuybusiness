@@ -34,6 +34,27 @@
         </div>
     </div>
 
+    <div id="add-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Adaugă produs</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="modal-form" onsubmit="submitModalForm(event)">
+                <input type="hidden" id="modal-person">
+                
+                <input type="text" id="modal-name" placeholder="Nume produs" required>
+                <input type="text" id="modal-model" placeholder="Model" required>
+                <input type="text" id="modal-size" placeholder="Mărime" required>
+                <input type="number" id="modal-price" placeholder="Preț (RON)" step="0.01" required>
+                <input type="number" id="modal-weight" placeholder="Grame (g)" required>
+                <input type="url" id="modal-link" placeholder="Link (https://...)" required>
+                
+                <button type="submit" class="btn-submit">Adaugă Produsul</button>
+            </form>
+        </div>
+    </div>
+
     <script type="module" src="app.js"></script>
 </body>
 </html>
