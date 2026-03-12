@@ -18,26 +18,26 @@ const friends = ["Lukas", "Alex", "Adelin", "Cristi"];
 function createMoneyRain() {
     const bg = document.getElementById('money-bg');
     const moneySymbols = ['💵', '💶', '💰', '💸'];
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 25; i++) {
         let money = document.createElement('div');
         money.classList.add('money-icon');
         money.innerText = moneySymbols[Math.floor(Math.random() * moneySymbols.length)];
         money.style.left = `${Math.random() * 100}vw`;
-        money.style.animationDuration = `${Math.random() * 5 + 5}s`;
+        money.style.animationDuration = `${Math.random() * 7 + 8}s`; /* Cădere mai lentă, elegantă */
         money.style.animationDelay = `${Math.random() * 5}s`;
         bg.appendChild(money);
     }
 }
 createMoneyRain();
 
-// Generăm structura tabelelor
 function renderTablesSetup() {
     const container = document.getElementById('tables-container');
     container.innerHTML = '';
 
     friends.forEach(friend => {
+        // Am adăugat clasa 'glass-card' pe div-ul principal
         container.innerHTML += `
-            <div class="person-section" id="section-${friend}">
+            <div class="person-section glass-card" id="section-${friend}">
                 <div class="person-header">
                     <h2>${friend}</h2>
                     <div class="person-stats">
@@ -61,7 +61,7 @@ function renderTablesSetup() {
                         </tr>
                     </thead>
                     <tbody id="tbody-${friend}">
-                        </tbody>
+                    </tbody>
                 </table>
             </div>
         `;
@@ -69,26 +69,20 @@ function renderTablesSetup() {
 }
 renderTablesSetup();
 
-// --- LOGICA PENTRU POP-UP (MODAL) ---
-
 window.openModal = function(person) {
-    // Setăm numele persoanei în titlu și în input-ul ascuns
     document.getElementById('modal-title').innerText = `Adaugă la ${person}`;
     document.getElementById('modal-person').value = person;
-    // Afișăm panoul
     document.getElementById('add-modal').classList.add('active');
 }
 
 window.closeModal = function() {
-    // Ascundem panoul și golim formularul
     document.getElementById('add-modal').classList.remove('active');
     document.getElementById('modal-form').reset();
 }
 
 window.submitModalForm = async function(event) {
-    event.preventDefault(); // Oprește refresh-ul
+    event.preventDefault();
 
-    // Luăm datele din pop-up
     const newItem = {
         person: document.getElementById('modal-person').value,
         name: document.getElementById('modal-name').value,
@@ -101,14 +95,12 @@ window.submitModalForm = async function(event) {
 
     try {
         await addDoc(collection(db, "orders"), newItem);
-        closeModal(); // Închide panoul automat după ce a adăugat produsul
+        closeModal();
     } catch (error) {
         console.error("Eroare la adăugare: ", error);
         alert("Eroare la adăugare. Verifică consola.");
     }
 }
-
-// ------------------------------------
 
 window.deleteItem = async function(id) {
     if(confirm("Ești sigur că vrei să ștergi acest produs?")) {
@@ -116,7 +108,6 @@ window.deleteItem = async function(id) {
     }
 }
 
-// Citim datele din Firebase
 onSnapshot(collection(db, "orders"), (snapshot) => {
     let totals = { Lukas: 0, Alex: 0, Adelin: 0, Cristi: 0 };
     let weights = { Lukas: 0, Alex: 0, Adelin: 0, Cristi: 0 };
@@ -158,7 +149,6 @@ onSnapshot(collection(db, "orders"), (snapshot) => {
         document.getElementById(`weight-${friend}`).innerText = weights[friend];
     });
 
-    // Actualizare Total Global (Panou Dreapta)
     document.getElementById('grand-total-price').innerText = grandTotalPrice.toFixed(2) + " RON";
     document.getElementById('grand-total-weight').innerText = grandTotalWeight + " g";
     document.getElementById('kg-estimate').innerText = `(${(grandTotalWeight / 1000).toFixed(2)} kg)`;

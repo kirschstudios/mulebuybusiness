@@ -4,30 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comanda Mulebuy Business</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    
     <div class="money-background" id="money-bg"></div>
 
     <div class="container">
         <header>
-            <h1>💼 Comanda Mulebuy Business 💼</h1>
-            <p>Gestionarea comenzilor pentru Lukas, Alex, Adelin și Cristi</p>
+            <h1 class="gradient-text">💼 Comanda Mulebuy Business 💼</h1>
         </header>
 
         <div class="main-layout">
             <div class="content-area" id="tables-container">
                 </div>
 
-            <aside class="grand-total-panel">
-                <h2>📊 TOTAL COMANDĂ</h2>
-                <div class="summary-box">
+            <aside class="grand-total-panel glass-card">
+                <h2 class="gradient-text">📊 TOTAL COMANDĂ</h2>
+                <div class="summary-box glass-card-inner">
                     <p>Total Bani:</p>
-                    <h3 id="grand-total-price">0.00 RON</h3>
+                    <h3 id="grand-total-price" class="gradient-text">0.00 RON</h3>
                 </div>
-                <div class="summary-box">
+                <div class="summary-box glass-card-inner">
                     <p>Greutate Colet:</p>
-                    <h3 id="grand-total-weight">0 g</h3>
+                    <h3 id="grand-total-weight" class="gradient-text">0 g</h3>
                     <small id="kg-estimate">(0.00 kg)</small>
                 </div>
             </aside>
@@ -35,9 +38,9 @@
     </div>
 
     <div id="add-modal" class="modal-overlay">
-        <div class="modal-content">
+        <div class="modal-content glass-card">
             <div class="modal-header">
-                <h2 id="modal-title">Adaugă produs</h2>
+                <h2 id="modal-title" class="gradient-text">Adaugă produs</h2>
                 <button class="close-btn" onclick="closeModal()">&times;</button>
             </div>
             <form id="modal-form" onsubmit="submitModalForm(event)">
