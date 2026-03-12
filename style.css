@@ -1,0 +1,225 @@
+:root {
+    --bg-color: #0f172a;
+    --card-bg: #1e293b;
+    --text-main: #f8fafc;
+    --accent: #10b981;
+    --accent-hover: #059669;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 10;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 20px;
+}
+
+header h1 {
+    font-size: 2.5em;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.main-layout {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.content-area {
+    flex: 1;
+}
+
+/* Panou Total Global */
+.grand-total-panel {
+    width: 280px;
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    border: 2px solid var(--accent);
+    position: sticky;
+    top: 20px;
+}
+
+.grand-total-panel h2 {
+    margin-top: 0;
+    color: var(--accent);
+    text-align: center;
+    border-bottom: 1px solid #334155;
+    padding-bottom: 10px;
+}
+
+.summary-box {
+    background-color: #0f172a;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.summary-box p {
+    margin: 0 0 5px 0;
+    color: #cbd5e1;
+    font-size: 0.9em;
+    text-transform: uppercase;
+}
+
+.summary-box h3 {
+    margin: 0;
+    color: var(--accent);
+    font-size: 1.5em;
+}
+
+#kg-estimate {
+    color: #94a3b8;
+}
+
+/* Secțiuni Tabele (Fiecare Persoană) */
+.person-section {
+    background-color: var(--card-bg);
+    margin-bottom: 40px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.person-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #334155;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.person-header h2 {
+    margin: 0;
+    color: #cbd5e1;
+    font-size: 1.8em;
+}
+
+.person-stats {
+    text-align: right;
+}
+
+.total-price {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--accent);
+}
+
+.total-weight {
+    font-size: 0.9em;
+    color: #94a3b8;
+}
+
+/* Formular Adăugare Specific (Nou) */
+.person-add-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+    background-color: #0f172a;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px dashed #334155;
+}
+
+.person-add-form input {
+    flex: 1 1 100px;
+    padding: 10px;
+    border: 1px solid #334155;
+    background-color: #1e293b;
+    color: white;
+    border-radius: 6px;
+    outline: none;
+    font-size: 0.9em;
+}
+
+.person-add-form input:focus { border-color: var(--accent); }
+
+.btn-submit-small {
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    white-space: nowrap;
+}
+
+.btn-submit-small:hover { background-color: var(--accent-hover); }
+
+/* Tabel */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #334155;
+}
+
+th {
+    color: var(--accent);
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+.btn-link {
+    background-color: #3b82f6;
+    color: white;
+    padding: 6px 12px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.btn-delete {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Background Bani */
+.money-background {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 1; overflow: hidden;
+}
+.money-icon {
+    position: absolute; font-size: 2em; animation: fall linear infinite; opacity: 0.2;
+}
+@keyframes fall { 0% { transform: translateY(-10vh) rotate(0deg); } 100% { transform: translateY(110vh) rotate(360deg); } }
+
+/* Telefoane */
+@media (max-width: 900px) {
+    .main-layout { flex-direction: column-reverse; }
+    .grand-total-panel { width: 100%; position: static; box-sizing: border-box; margin-bottom: 20px; }
+    .person-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .person-stats { text-align: left; }
+    .person-section { overflow-x: auto; }
+}
